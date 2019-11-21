@@ -91,27 +91,31 @@ public class AdminController extends ExceptionResolver {
 		return new APIresponse(HttpStatus.OK.value(), "All users in the system are provided", response);
 	}
 
-	@DeleteMapping(path = "/deleteUser/{id}")
+	@PutMapping(path = "/deleteUser")
 	@PreAuthorize("hasRole('ADMIN')")
-	public APIresponse deleteUser(@PathVariable("id") Long userId) {
-
-		User user = userService.findById(userId);
-
-		if (user == null) {
-			return new APIresponse(HttpStatus.NOT_FOUND.value(), "User with id " + userId + " does not exist.", null);
+	public APIresponse deleteUser(@RequestBody List<String> emails) {
+		
+		for(String email : emails) {
+			User user = userService.findByEmail(email);
+	
+//			if (user == null) {
+//				return new APIresponse(HttpStatus.NOT_FOUND.value(), "User with id does not exist.", null);
+//			}
+			
+			if(user != null) {
+				userService.delete(user);
+				
+				SimpleMailMessage mailMessage = new SimpleMailMessage();
+		
+				mailMessage.setTo(user.getEmail());
+				mailMessage.setSubject("Account Deleted");
+				mailMessage.setFrom("ulmautoemail@gmail.com");
+				mailMessage.setText("You have been removed from the ulm communication app. " + "Thank you!");
+		
+				emailSenderService.sendEmail(mailMessage);
+			}
 		}
 
-		userService.delete(user);
-		
-		SimpleMailMessage mailMessage = new SimpleMailMessage();
-
-		mailMessage.setTo(user.getEmail());
-		mailMessage.setSubject("Event Cancelled");
-		mailMessage.setFrom("ulmautoemail@gmail.com");
-		mailMessage.setText("You have been removed from the ulm communication app. " + "Thank you!");
-
-		emailSenderService.sendEmail(mailMessage);
-
-		return new APIresponse(HttpStatus.OK.value(), "User was successfully deleted.", user);
+		return new APIresponse(HttpStatus.OK.value(), "Users were successfully deleted.", emails);
 	}
 }
