@@ -30,6 +30,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.events = [];
     this.dataStorage.fetchUpcomingEvents();
     this.name = this.authService.username;
     this.dataStorage.isLoading.subscribe(loading => {
@@ -38,6 +39,7 @@ export class DashboardComponent implements OnInit {
         console.log(this.events);
       }
     });
+    this.events.sort((a,b) => new Date(a.start) < new Date(b.start) ? -1: new Date(a.start) > new Date(b.start) ? 1: 0 );
     // this.subscription = this.calService.eventsChanged.subscribe(
     //   (events: any[]) => {
     //     this.events = events;

@@ -45,7 +45,7 @@ export class DataStorageService {
   > = this.upcomingEventsSubject.asObservable();
   private adminAppointmentReceived: BehaviorSubject<any> = new BehaviorSubject<
     any
-  >({});
+  >([]);
 
   private majorSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
@@ -72,7 +72,11 @@ export class DataStorageService {
   }
 
   get upcomingEventsList(): CalEvent[] {
-    return this.upcomingEventsSubject.value;
+    if(this.upcomingEventsSubject.value === {}){
+      return [];
+    } else {
+      return this.upcomingEventsSubject.value;
+    }
   }
 
   get eventsList(): CalEvent[] {
@@ -242,9 +246,14 @@ export class DataStorageService {
         finalize(() => this.isLoadingSubject.next(false)))
       )
       .subscribe((result: ApiResponse) => {
-        console.log(result);
-        console.log(result.result);
-        this.upcomingEventsSubject.next(result.result);
+        if(result){
+          console.log(result);
+          console.log(result.result);
+          this.upcomingEventsSubject.next(result.result);
+        } else {
+          this.upcomingEventsSubject.next([]);
+        }
+        
       });
   }
 
