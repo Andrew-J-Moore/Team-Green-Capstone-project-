@@ -1,11 +1,12 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatChipInputEvent, MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatChipInputEvent, MatDialog, MatSnackBar, MatAutocompleteSelectedEvent } from '@angular/material';
 import { Calendar } from '../calendar-list/calendar.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { DataStorageService } from '../../shared/data-storage.service';
+import { DataStorageService, Emails } from '../../shared/data-storage.service';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { GroupSelection } from '../../shared/group-selection';
 import { AuthService } from 'src/app/auth/auth.service';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-share-calendar',
@@ -25,6 +26,9 @@ export class ShareCalendarComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   errorMessage: string;m
   role: string;
+  userList: any = [];
+  filteredUserList: any;
+  userInput: any;
 
   constructor(
     private ref: MatDialogRef<ShareCalendarComponent>,
@@ -33,7 +37,21 @@ export class ShareCalendarComponent implements OnInit {
     private snackbar: MatSnackBar,
     private authService: AuthService,
     @Inject(MAT_DIALOG_DATA)public data: any
-  ) { }
+  ) { 
+    this.dataStorage.getEmails();
+    this.dataStorage.emails.subscribe((result: Emails[]) => {
+      if (result.length > 0) {
+        result.forEach(o => this.userList.push(o.email));
+      }
+    });
+
+    this.filteredUserList = this.email.valueChanges.pipe(
+      startWith(null),
+      map((user: string | null) =>
+        user ? this.filter(user) : this.userList.slice()
+      )
+    );
+  }
 
   ngOnInit() {
     this.role = this.authService.user;
@@ -42,6 +60,20 @@ export class ShareCalendarComponent implements OnInit {
     this.shareForm = new FormGroup({
       email: new FormControl('',[Validators.email])
     })
+  }
+
+  filter(value: string): string[] {
+    const filterValue = value.toLocaleLowerCase();
+    return this.userList.filter(user =>
+      user.toLocaleLowerCase().includes(filterValue)
+    );
+  }
+  selected(event: MatAutocompleteSelectedEvent): void {
+    if (!this.emails.includes(event.option.value)) {
+      this.emails.push(event.option.value);
+      this.userInput.nativeElement.value = "";
+      this.email.setValue(null);
+    }
   }
 
   onSubmit(){
