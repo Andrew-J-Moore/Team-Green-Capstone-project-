@@ -128,6 +128,7 @@ import { UploadMajorComponent } from "./home/administration/upload-major/upload-
 import { YourGroupComponent } from "./home/group/your-group/your-group.component";
 import { EmailDialogComponent } from "./shared/email-dialog/email-dialog.component";
 import { UpdatePasswordComponent } from "./home/update-password/update-password.component";
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 @NgModule({
   declarations: [
@@ -198,7 +199,8 @@ import { UpdatePasswordComponent } from "./home/update-password/update-password.
     UploadMajorComponent,
     YourGroupComponent,
     EmailDialogComponent,
-    UpdatePasswordComponent
+    UpdatePasswordComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,

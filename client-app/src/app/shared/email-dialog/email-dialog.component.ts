@@ -47,6 +47,7 @@ export class EmailDialogComponent implements OnInit {
           }
         }
       });
+    this.router.navigate(["/login"]);
   }
 
   cancel() {

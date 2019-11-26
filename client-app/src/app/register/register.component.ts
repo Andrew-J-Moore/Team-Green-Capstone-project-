@@ -92,7 +92,7 @@ export class RegisterComponent implements OnInit {
     );
     this.signupForm.reset();
     this.signupForm.clearValidators();
-    this.dataStorage.fetchUsers()
+    this.dataStorage.fetchUsers();
   }
 
   clearForm() {

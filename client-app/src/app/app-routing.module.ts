@@ -49,6 +49,7 @@ import { ManualStartComponent } from "./home/vertical-navigation/user-manual/man
 import { YourGroupComponent } from "./home/group/your-group/your-group.component";
 import { EmailDialogComponent } from "./shared/email-dialog/email-dialog.component";
 import { UpdatePasswordComponent } from "./home/update-password/update-password.component";
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 const routes: Routes = [
   {
@@ -94,7 +95,6 @@ const routes: Routes = [
         ]
       },
       { path: "admin", component: AdministrationComponent },
-      { path: "broadcast-management", component: BroadcastManagementComponent },
       { path: "calendar", component: CalendarComponent },
       { path: "event/:id", component: EventDetailComponent },
       { path: "create-event", component: CreateEventComponent },
@@ -167,7 +167,8 @@ const routes: Routes = [
       }
     ]
   },
-  { path: "broadcast", component: BroadcastComponent }
+  { path: "broadcast", component: BroadcastComponent },
+  { path: "**", component: ErrorPageComponent }
 ];
 
 @NgModule({
