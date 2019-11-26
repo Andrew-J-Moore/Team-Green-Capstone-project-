@@ -1,11 +1,16 @@
 .wrapper {
   background-color: black;
   height: 100%;
-  overflow: hidden;
 }
 
 .maroon {
   color: #800029 !important;
+}
+
+.carousel-slide-content{
+  height:100%;
+  width:80%;
+  vertical-align: middle;
 }
 
 .mat-button.mat-accent,

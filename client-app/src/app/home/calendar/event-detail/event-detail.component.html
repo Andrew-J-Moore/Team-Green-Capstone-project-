@@ -23,24 +23,54 @@
             <p>{{ event.start.toLocaleString([], {month:'2-digit', day:'2-digit', year:'2-digit', hour: '2-digit',  minute:'2-digit'}) }} - 
             {{event.end.toLocaleString([], {month:'2-digit', day:'2-digit', year:'2-digit', hour: '2-digit',  minute:'2-digit'}) }}</p>
         </div>
-        <div *ngIf="event.allDay && event.start !== newEnd">
+        <div *ngIf="event.allDay && event.start !== newEnd && event.end !== null">
             <p>{{event.start.toLocaleDateString()}} - {{newEnd.toLocaleDateString()}}</p>
         </div>
-        <div *ngIf="event.allDay && event.start===newEnd">
+        <div *ngIf="!event.end">
             <p>{{event.start.toLocaleDateString()}}</p>
         </div>
         <p *ngIf="event.extendedProps.location != ''"><b>Location:</b> {{ event.extendedProps.location }}</p>
         <p *ngIf="event.extendedProps.description != ''"><b>Description:</b> {{ event.extendedProps.description }}</p>
     </div>
-    <div class="user-wrap" *ngIf="viewAttendees">
-        <mat-list>
-            <mat-list-item *ngFor="let user of guests | filterMember: searchText">
-                <mat-icon mat-list-icon>person_outline</mat-icon>
-                <h4 mat-line>{{user.name}}</h4>
-                <p mat-line>{{user.email}}</p>
-            </mat-list-item>
-        </mat-list>
+    <div *ngIf="viewAttendees">
+        <p *ngIf="event.extendedProps.recipients.length === 0">This event has no recipients.</p>
+        <div class="user-wrap" *ngIf="viewAll">
+            <mat-selection-list
+            #users
+            (selectionChange)="onSelectChange(users.selectedOptions.selected)">
+                <mat-list-option *ngFor="let user of guests | filterMember: searchText" [value]="user.email">
+                    <mat-icon mat-list-icon>person_outline</mat-icon>
+                    <h4 mat-line>{{user.name}}</h4>
+                    <p mat-line>{{user.email}}</p>
+                </mat-list-option>
+            </mat-selection-list>
+        </div>
+        <div class="user-wrap" *ngIf="viewConfirmed">
+            <mat-selection-list
+            #confirmed
+            (selectionChange)="onSelectChange(confirmed.selectedOptions.selected)"
+            >
+                <mat-list-option *ngFor="let user of event.extendedProps.recipients | filterMember: searchText" [value]="user.email">
+                    <mat-icon mat-list-icon>person_outline</mat-icon>
+                    <h4 mat-line>{{user.name}}</h4>
+                    <p mat-line>{{user.email}}</p>
+                </mat-list-option>
+            </mat-selection-list>
+        </div> 
+        <div class="user-wrap" *ngIf="viewPending">
+            <mat-selection-list
+            #confirmed
+            (selectionChange)="onSelectChange(confirmed.selectedOptions.selected)"
+            >
+                <mat-list-option *ngFor="let user of pending | filterMember: searchText" [value]="user.email">
+                    <mat-icon mat-list-icon>person_outline</mat-icon>
+                    <h4 mat-line>{{user.name}}</h4>
+                    <p mat-line>{{user.email}}</p>
+                </mat-list-option>
+            </mat-selection-list>
+        </div> 
     </div>
+    
 </div>
 
 <mat-toolbar class="bottom-row">
@@ -54,7 +84,21 @@
             <button mat-menu-item *ngIf="event.extendedProps.createdBy.email !== username" class="option" (click)="confirmAttendance()">Confirm Attendance</button>
             <button mat-menu-item *ngIf="event.extendedProps.createdBy.email === username && !viewAttendees" class="option" (click)="viewGuests()">View Attendees</button>
             <button mat-menu-item *ngIf="event.extendedProps.createdBy.email === username && viewAttendees" class="option" (click)="viewGuests()">View Details</button>
-        </mat-menu>
+        </mat-menu>&nbsp;
+        <mat-chip-list *ngIf="event.extendedProps.createdBy.email === username && (viewAttendees)">
+            <mat-chip (click)="switchToPending()">Pending</mat-chip>
+            <mat-chip (click)="switchToConfirmed()">All</mat-chip>
+            <mat-chip (click)="switchToAll()">Going</mat-chip>
+        </mat-chip-list>&nbsp;
+        <button
+            mat-raised-button
+            class="button-maroon"
+            (click)="messageSelectedRecipients()"
+            matTooltip="click to message selected recipients"
+            *ngIf="viewAttendees && selectedRecipients.length>0"
+          >
+            <mat-icon mat-list-icon>email</mat-icon> &nbsp; Email Selected
+          </button>
         <mat-hint *ngIf="isAppt">Please see the appointments section to make changes.</mat-hint>
     </mat-toolbar-row>
 </mat-toolbar>
