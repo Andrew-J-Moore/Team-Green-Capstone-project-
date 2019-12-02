@@ -22,9 +22,9 @@ import { AppointmentSnackbarComponent } from "../appointment/shared-appointment/
   providedIn: "root"
 })
 export class DataStorageService {
-  private baseUrlEvent = "http://localhost:8181/api/event/";
-  private baseUrlCalendar = "http://localhost:8181/api/calendar/";
-  private baseUrlAdmin = "http://localhost:8181/api/admin/"
+  private baseUrlEvent = "http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/event/";
+  private baseUrlCalendar = "http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/calendar/";
+  private baseUrlAdmin = "http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/admin/"
 
   private isLoadingSubject: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
@@ -57,7 +57,7 @@ export class DataStorageService {
     private calService: CalendarService,
     private _snackbar: MatSnackBar
   ) {}
-  
+
 
   get appointmentsReceived(): Appointment[] {
     if (!this.adminAppointmentReceived.value) {
@@ -109,7 +109,7 @@ export class DataStorageService {
   getEmails() {
     this.isLoadingSubject.next(true);
     this.http
-      .get<ApiResponse>("http://localhost:8181/api/admin/getAllUsers")
+      .get<ApiResponse>("http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/admin/getAllUsers")
       .pipe(
         (map(data => data),
         catchError(error => throwError(error)),
@@ -131,7 +131,7 @@ export class DataStorageService {
     var formdata: FormData = new FormData();
     formdata.append("email", email);
     return this.http
-      .post<ApiResponse>("http://localhost:8181/api/auth/forgot", formdata)
+      .post<ApiResponse>("http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/auth/forgot", formdata)
       .pipe(
         (map(data => data), catchError(error => throwError(error))),
         finalize(() => this.isLoadingSubject.next(false))
@@ -143,7 +143,7 @@ export class DataStorageService {
 
     return this.http
       .post<ApiResponse>(
-        "http://localhost:8181/api/auth/processResetPassword",
+        "http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/auth/processResetPassword",
         obj
       )
       .pipe(
@@ -156,7 +156,7 @@ export class DataStorageService {
     this.isLoadingSubject.next(true);
 
     return this.http
-      .put<ApiResponse>("http://localhost:8181/api/admin/changePassword", obj)
+      .put<ApiResponse>("http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/admin/changePassword", obj)
       .pipe(
         (map(data => data), catchError(error => throwError(error))),
         finalize(() => this.isLoadingSubject.next(false))
@@ -171,7 +171,7 @@ export class DataStorageService {
     console.log("file upload!");
     return this.http
       .post<ApiResponse>(
-        "http://localhost:8181/api/file/uploadUser/"+role,
+        "http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/file/uploadUser/"+role,
         formdata
       )
       .pipe(
@@ -223,7 +223,7 @@ export class DataStorageService {
   }
 
   getImages(): Observable<any>{
-    return this.http.get('http://localhost:8181/api/auth/getImages');
+    return this.http.get('http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/auth/getImages');
   }
 
   addCourses(formData: FormData) {
@@ -239,7 +239,7 @@ export class DataStorageService {
   fetchUpcomingEvents() {
     this.isLoadingSubject.next(true);
     this.http
-      .get<ApiResponse>("http://localhost:8181/api/event/" + "upCommingEvents")
+      .get<ApiResponse>("http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/event/" + "upCommingEvents")
       .pipe(
         (map(data => data),
         catchError(error => throwError(error)),
@@ -253,13 +253,13 @@ export class DataStorageService {
         } else {
           this.upcomingEventsSubject.next([]);
         }
-        
+
       });
   }
 
   getMajors() {
     this.isLoadingSubject.next(true);
-    this.http.get<ApiResponse>('http://localhost:8181/api/group/getAllMajors').pipe(
+    this.http.get<ApiResponse>('http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/group/getAllMajors').pipe(
       (map(data=>data), catchError(error => throwError(error))),
       finalize(()=>this.isLoadingSubject.next(false))
     ).subscribe(result => {
@@ -327,7 +327,7 @@ export class DataStorageService {
         if(result.result){
           this.calSubject.next(result.result);
           this.calService.setCalendars(result.result);
-        }     
+        }
       });
   }
 
@@ -348,7 +348,7 @@ export class DataStorageService {
   uploadMajors(formdata: FormData) {
     return this.http
       .post<ApiResponse>(
-        "http://localhost:8181/api/admin/uploadCourses",
+        "http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/admin/uploadCourses",
         formdata
       )
       .pipe(
@@ -478,7 +478,7 @@ export class DataStorageService {
     this.isLoadingSubject.next(true);
     return this.http
       .post<ApiResponse>(
-        "http://localhost:8181/api/group/" + "sendEmailToFew",
+        "http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/group/" + "sendEmailToFew",
         obj
       )
       .pipe(
