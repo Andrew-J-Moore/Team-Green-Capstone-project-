@@ -437,7 +437,7 @@ module.exports = "<mat-toolbar class=\"top-detail-row\">\r\n    <p>Share Calenda
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"carousel\">\r\n  <app-broadcast></app-broadcast>\r\n</div>\r\n<mat-divider></mat-divider>\r\n<div fxLayout=\"row\" fxLayoutAlign=\"center center\" class=\"heading\">\r\n  <h3>Welcome, {{ name }}. Here are your upcoming events.</h3>\r\n</div>\r\n<mat-list class=\"example-card-width\">\r\n  <h3 mat-subheader>Upcoming Events</h3>\r\n  <mat-list-item\r\n    *ngFor=\"let event of events | paginate: { itemsPerPage: 4, currentPage: p }\"\r\n  >\r\n    <mat-icon mat-list-icon>event</mat-icon>\r\n    <h4 mat-line>{{ event.title }}</h4>\r\n    <p mat-line>{{ event.description }}</p>\r\n    <p mat-line>{{ event.start }} - {{ event.end }}</p>\r\n    <p mat-line>\r\n      <mat-icon mat-list-icon style=\"font-size: 14px; width: 15px;\"\r\n        >room</mat-icon\r\n      >{{ event.location }}\r\n    </p>\r\n  </mat-list-item>\r\n  <mat-divider></mat-divider>\r\n</mat-list>\r\n<div fxLayout=\"row\" fxLayoutAlign=\"center center\" class=\"pagination-center\">\r\n  <div>\r\n    <pagination-controls\r\n      autoHide=\"true\"\r\n      (pageChange)=\"p = $event\"\r\n    ></pagination-controls>\r\n  </div>\r\n</div>\r\n<!-- <div class=\"accordion-style\">\r\n  <mat-accordion>\r\n    <mat-expansion-panel>\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title> Welcome, {{ name }}! </mat-panel-title>\r\n        <mat-panel-description>\r\n          All events and Appointments\r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      <mat-list class=\"example-card-width\">\r\n        <h3 mat-subheader>Folders</h3>\r\n        <mat-list-item *ngFor=\"let folder of folders\">\r\n          <mat-icon mat-list-icon>folder</mat-icon>\r\n          <h4 mat-line>{{ folder.name }}</h4>\r\n          <p mat-line>{{ folder.updated | date }}</p>\r\n        </mat-list-item>\r\n        <mat-divider></mat-divider>\r\n        <h3 mat-subheader>Notes</h3>\r\n        <mat-list-item *ngFor=\"let note of notes\">\r\n          <mat-icon mat-list-icon>note</mat-icon>\r\n          <h4 mat-line>{{ note.name }}</h4>\r\n          <p mat-line>{{ note.updated | date }}</p>\r\n        </mat-list-item>\r\n      </mat-list>\r\n    </mat-expansion-panel>\r\n  </mat-accordion>\r\n</div> -->\r\n<!-- <div class=\"wrapper\">\r\n    <h3 class=\"heading\">\r\n      Welcome, {{ name }}. Here are your Events and Appointments for today:\r\n    </h3>\r\n    <full-calendar\r\n      id=\"calendar\"\r\n      defaultView=\"timeGridDay\"\r\n      [plugins]=\"calendarPlugins\"\r\n      [events]=\"events\"\r\n      [nextDayThreshold]=\"'00:00:00'\"\r\n      [themeSystem]=\"'standard'\"\r\n      [eventLimit]=\"false\"\r\n      [height]=\"'parent'\"\r\n      [header]=\"{\r\n        left: none,\r\n        center: 'title',\r\n        right: none\r\n      }\"\r\n    ></full-calendar>\r\n  </div>\r\n  <div class=\"space\"></div> -->\r\n"
+module.exports = "<div class=\"carousel\">\r\n  <app-broadcast></app-broadcast>\r\n</div>\r\n<mat-divider></mat-divider>\r\n<div *ngIf=\"currentRole === 'ROLE_ADMIN' || currentRole === 'ROLE_PM'\">\r\n  <div fxLayout=\"row\" fxLayoutAlign=\"center center\" class=\"heading\">\r\n    <h3>Welcome, {{ name }}. Here are your group and upcoming events!</h3>\r\n  </div>\r\n\r\n  <div\r\n    class=\"container\"\r\n    fxLayout=\"row\"\r\n    fxLayout.xs=\"column\"\r\n    fxLayoutAlign=\"flex-start\"\r\n    fxLayoutGap=\"10px\"\r\n    fxLayoutGap.xs=\"0\"\r\n  >\r\n    <div fxFlex=\"49%\">\r\n      <mat-list class=\"example-card-width\">\r\n        <h3 mat-subheader>Upcoming Events</h3>\r\n        <mat-list-item\r\n          *ngFor=\"\r\n            let event of events | paginate: { itemsPerPage: 4, currentPage: p }\r\n          \"\r\n        >\r\n          <mat-icon mat-list-icon>event</mat-icon>\r\n          <h4 mat-line>{{ event.title }}</h4>\r\n          <p mat-line>{{ event.description }}</p>\r\n          <p mat-line>{{ event.start }} - {{ event.end }}</p>\r\n          <p mat-line>\r\n            <mat-icon mat-list-icon style=\"font-size: 14px; width: 15px;\"\r\n              >room</mat-icon\r\n            >{{ event.location }}\r\n          </p>\r\n        </mat-list-item>\r\n        <mat-divider></mat-divider>\r\n      </mat-list>\r\n      <div\r\n        fxLayout=\"row\"\r\n        fxLayoutAlign=\"center center\"\r\n        class=\"pagination-center\"\r\n      >\r\n        <div>\r\n          <pagination-controls\r\n            autoHide=\"true\"\r\n            (pageChange)=\"p = $event\"\r\n          ></pagination-controls>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div fxFlex=\"49%\">\r\n      <mat-list class=\"example-card-width\">\r\n        <h3 mat-subheader>Your group</h3>\r\n        <mat-list-item\r\n          *ngFor=\"\r\n            let gr of group | paginate: { itemsPerPage: 4, currentPage: p }\r\n          \"\r\n        >\r\n          <mat-icon mat-list-icon>group</mat-icon>\r\n          <h4 mat-line>{{ gr.name }}</h4>\r\n          <p mat-line>{{ gr.description }}</p>\r\n          <p mat-line>{{ gr.semesterTerm }} - {{ gr.semesterYear }}</p>\r\n          <p mat-line>\r\n            <mat-icon mat-list-icon style=\"font-size: 14px; width: 15px;\">{{\r\n              gr.type === \"Custom\" ? \"build\" : \"school\"\r\n            }}</mat-icon\r\n            >{{ gr.type }}\r\n          </p>\r\n        </mat-list-item>\r\n        <mat-divider></mat-divider>\r\n      </mat-list>\r\n      <div\r\n        fxLayout=\"row\"\r\n        fxLayoutAlign=\"center center\"\r\n        class=\"pagination-center\"\r\n      >\r\n        <div>\r\n          <pagination-controls\r\n            autoHide=\"true\"\r\n            (pageChange)=\"p = $event\"\r\n          ></pagination-controls>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n<div *ngIf=\"currentRole === 'ROLE_MODERATOR' || currentRole === 'ROLE_USER'\">\r\n  <div fxLayout=\"row\" fxLayoutAlign=\"center center\" class=\"heading\">\r\n    <h3>Welcome, {{ name }}. Here are your upcoming events!</h3>\r\n  </div>\r\n  <mat-list class=\"example-card-width\">\r\n    <h3 mat-subheader>Upcoming Events</h3>\r\n    <mat-list-item\r\n      *ngFor=\"\r\n        let event of events | paginate: { itemsPerPage: 4, currentPage: p }\r\n      \"\r\n    >\r\n      <mat-icon mat-list-icon>event</mat-icon>\r\n      <h4 mat-line>{{ event.title }}</h4>\r\n      <p mat-line>{{ event.description }}</p>\r\n      <p mat-line>{{ event.start }} - {{ event.end }}</p>\r\n      <p mat-line>\r\n        <mat-icon mat-list-icon style=\"font-size: 14px; width: 15px;\"\r\n          >room</mat-icon\r\n        >{{ event.location }}\r\n      </p>\r\n    </mat-list-item>\r\n    <mat-divider></mat-divider>\r\n  </mat-list>\r\n  <div fxLayout=\"row\" fxLayoutAlign=\"center center\" class=\"pagination-center\">\r\n    <div>\r\n      <pagination-controls\r\n        autoHide=\"true\"\r\n        (pageChange)=\"p = $event\"\r\n      ></pagination-controls>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n<!-- <div class=\"accordion-style\">\r\n  <mat-accordion>\r\n    <mat-expansion-panel>\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title> Welcome, {{ name }}! </mat-panel-title>\r\n        <mat-panel-description>\r\n          All events and Appointments\r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      <mat-list class=\"example-card-width\">\r\n        <h3 mat-subheader>Folders</h3>\r\n        <mat-list-item *ngFor=\"let folder of folders\">\r\n          <mat-icon mat-list-icon>folder</mat-icon>\r\n          <h4 mat-line>{{ folder.name }}</h4>\r\n          <p mat-line>{{ folder.updated | date }}</p>\r\n        </mat-list-item>\r\n        <mat-divider></mat-divider>\r\n        <h3 mat-subheader>Notes</h3>\r\n        <mat-list-item *ngFor=\"let note of notes\">\r\n          <mat-icon mat-list-icon>note</mat-icon>\r\n          <h4 mat-line>{{ note.name }}</h4>\r\n          <p mat-line>{{ note.updated | date }}</p>\r\n        </mat-list-item>\r\n      </mat-list>\r\n    </mat-expansion-panel>\r\n  </mat-accordion>\r\n</div> -->\r\n<!-- <div class=\"wrapper\">\r\n    <h3 class=\"heading\">\r\n      Welcome, {{ name }}. Here are your Events and Appointments for today:\r\n    </h3>\r\n    <full-calendar\r\n      id=\"calendar\"\r\n      defaultView=\"timeGridDay\"\r\n      [plugins]=\"calendarPlugins\"\r\n      [events]=\"events\"\r\n      [nextDayThreshold]=\"'00:00:00'\"\r\n      [themeSystem]=\"'standard'\"\r\n      [eventLimit]=\"false\"\r\n      [height]=\"'parent'\"\r\n      [header]=\"{\r\n        left: none,\r\n        center: 'title',\r\n        right: none\r\n      }\"\r\n    ></full-calendar>\r\n  </div>\r\n  <div class=\"space\"></div> -->\r\n"
 
 /***/ }),
 
@@ -1464,7 +1464,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const httpOptions = {
-    headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ "Content-Type": "application/json" })
+    headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Content-Type': 'application/json' })
 };
 let AuthService = class AuthService {
     constructor(http, tokenStorage, router, _snackbar) {
@@ -1472,8 +1472,8 @@ let AuthService = class AuthService {
         this.tokenStorage = tokenStorage;
         this.router = router;
         this._snackbar = _snackbar;
-        this.loginUrl = "http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/auth/signin";
-        this.signupUrl = "http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/auth/signup";
+        this.loginUrl = 'http://localhost:8181/api/auth/signin';
+        this.signupUrl = 'http://localhost:8181/api/auth/signup';
         this.userRoleSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"]({});
         this.usernameSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"]({});
         this.nameSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"]({});
@@ -1509,16 +1509,16 @@ let AuthService = class AuthService {
                     this.usernameSubject.next(this.tokenStorage.getUsername());
                     console.log(data.result.role);
                     this.isLoggedin.next(true);
-                    this._snackbar.open("Login Successful!", "close", {
+                    this._snackbar.open('Login Successful!', 'close', {
                         duration: 4000,
-                        panelClass: ["standard"]
+                        panelClass: ['standard']
                     });
                     // this.router.navigate(["home"]);
                 }
                 else {
-                    this._snackbar.open(data.message, "close", {
+                    this._snackbar.open(data.message, 'close', {
                         duration: 4000,
-                        panelClass: ["delete"]
+                        panelClass: ['delete']
                     });
                 }
                 // if (data.status == 403) {
@@ -1539,7 +1539,7 @@ let AuthService = class AuthService {
                 this.usernameSubject.next(this.tokenStorage.getUsername());
                 console.log(data.result.role);
                 this.isLoggedin.next(true);
-                this.router.navigate(["home"]);
+                this.router.navigate(['home']);
             }
             else {
                 this.isLoggedin.next(false);
@@ -1552,7 +1552,7 @@ let AuthService = class AuthService {
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(this.handleError));
     }
     handleError(errorRes) {
-        let errorMessage = "An unknown error occured!";
+        let errorMessage = 'An unknown error occured!';
         if (!errorRes.error || !errorRes.error.error) {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(errorMessage);
         }
@@ -1575,7 +1575,7 @@ AuthService.ctorParameters = () => [
 ];
 AuthService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
-        providedIn: "root"
+        providedIn: 'root'
     }),
     tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
         _token_storage_service__WEBPACK_IMPORTED_MODULE_5__["TokenStorageService"],
@@ -4630,7 +4630,7 @@ __webpack_require__.r(__webpack_exports__);
 let DataStorageAppointmentService = class DataStorageAppointmentService {
     constructor(http) {
         this.http = http;
-        this.baseUrlAppointment = "http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/appointment/";
+        this.baseUrlAppointment = "http://localhost:8181/api/appointment/";
         this.isLoadingSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](false);
         this.isLoading = this.isLoadingSubject.asObservable();
         this.appointmentSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]({});
@@ -6989,12 +6989,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashboardComponent", function() { return DashboardComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-/* harmony import */ var _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/data-storage.service */ "./src/app/home/shared/data-storage.service.ts");
-/* harmony import */ var src_app_auth_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/auth/auth.service */ "./src/app/auth/auth.service.ts");
-/* harmony import */ var _calendar_calendar_list_calendar_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../calendar/calendar-list/calendar.service */ "./src/app/home/calendar/calendar-list/calendar.service.ts");
-/* harmony import */ var _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fullcalendar/timegrid */ "./node_modules/@fullcalendar/timegrid/main.esm.js");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
+/* harmony import */ var _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/data-storage.service */ "./src/app/home/shared/data-storage.service.ts");
+/* harmony import */ var src_app_auth_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/auth/auth.service */ "./src/app/auth/auth.service.ts");
+/* harmony import */ var _calendar_calendar_list_calendar_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../calendar/calendar-list/calendar.service */ "./src/app/home/calendar/calendar-list/calendar.service.ts");
+/* harmony import */ var _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fullcalendar/timegrid */ "./node_modules/@fullcalendar/timegrid/main.esm.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _group_group_data_storage_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../group/group-data-storage.service */ "./src/app/home/group/group-data-storage.service.ts");
+/* harmony import */ var _appointment_shared_appointment_data_storage_appointment_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../appointment/shared-appointment/data-storage-appointment.service */ "./src/app/home/appointment/shared-appointment/data-storage-appointment.service.ts");
+
+
 
 
 
@@ -7005,16 +7009,56 @@ __webpack_require__.r(__webpack_exports__);
 
 let DashboardComponent = class DashboardComponent {
     // subscription: Subscription;
-    constructor(http, dataStorage, authService, calService, dialog) {
-        this.http = http;
+    constructor(dataStorage, authService, calService, dialog, router, groupDataStorage, role, route, _snackbar, dataStorageAppointment) {
         this.dataStorage = dataStorage;
         this.authService = authService;
         this.calService = calService;
         this.dialog = dialog;
-        this.calendarPlugins = [_fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_6__["default"]];
+        this.router = router;
+        this.groupDataStorage = groupDataStorage;
+        this.role = role;
+        this.route = route;
+        this._snackbar = _snackbar;
+        this.dataStorageAppointment = dataStorageAppointment;
+        this.calendarPlugins = [_fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_5__["default"]];
+        this.isGroupEmpty = false;
+        this.currentRole = "";
+        this.appointmentDate = "";
+        this.currentRole = this.role.user;
+        this.groupDataStorage.fetchGroup();
+        console.log(this.groupDataStorage.groupLists);
+        this.groupDataStorage.isLoading.subscribe(loading => {
+            console.log(loading);
+            if (!loading) {
+                if (this.groupDataStorage.groupLists.length > 0) {
+                    this.group = this.groupDataStorage.groupLists;
+                    this.isGroupEmpty = false;
+                    console.log(this.group);
+                }
+                else {
+                    this.isGroupEmpty = true;
+                }
+            }
+        });
     }
     ngOnInit() {
         this.events = [];
+        // if (
+        //   this.currentRole === "ROLE_USER" ||
+        //   this.currentRole === "ROLE_MODERATOR"
+        // ) {
+        //   this.dataStorageAppointment.fetchUserAppointment();
+        //   this.dataStorageAppointment.isLoading.subscribe(loading => {
+        //     console.log(loading);
+        //     if (!loading) {
+        //       console.log(this.dataStorageAppointment.appointmentLists);
+        //       this.appointments = this.dataStorageAppointment.appointmentLists;
+        //       for (let d of this.appointments) {
+        //         this.datesArr = d.date;
+        //       }
+        //     }
+        //   });
+        // }
         this.dataStorage.fetchUpcomingEvents();
         this.name = this.authService.username;
         this.dataStorage.isLoading.subscribe(loading => {
@@ -7031,13 +7075,36 @@ let DashboardComponent = class DashboardComponent {
         // );
         this.userRole = this.authService.user;
     }
+    unique(date) {
+        var arr = [];
+        for (var i = 0; i < date.length; i++) {
+            if (!arr.includes(date[i])) {
+                arr.push(date[i]);
+            }
+        }
+        return arr;
+    }
+    formatDate(date) {
+        if (date.length > 0) {
+            var arr = this.unique(date);
+            for (let d of arr) {
+                this.appointmentDate += d + " " + "|" + " ";
+            }
+        }
+        this.appointmentDate = this.appointmentDate.slice(0, this.appointmentDate.length - 2);
+    }
 };
 DashboardComponent.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
-    { type: _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_3__["DataStorageService"] },
-    { type: src_app_auth_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"] },
-    { type: _calendar_calendar_list_calendar_service__WEBPACK_IMPORTED_MODULE_5__["CalendarService"] },
-    { type: _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatDialog"] }
+    { type: _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_2__["DataStorageService"] },
+    { type: src_app_auth_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"] },
+    { type: _calendar_calendar_list_calendar_service__WEBPACK_IMPORTED_MODULE_4__["CalendarService"] },
+    { type: _angular_material__WEBPACK_IMPORTED_MODULE_6__["MatDialog"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"] },
+    { type: _group_group_data_storage_service__WEBPACK_IMPORTED_MODULE_8__["GroupDataStorageService"] },
+    { type: src_app_auth_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__["ActivatedRoute"] },
+    { type: _angular_material__WEBPACK_IMPORTED_MODULE_6__["MatSnackBar"] },
+    { type: _appointment_shared_appointment_data_storage_appointment_service__WEBPACK_IMPORTED_MODULE_9__["DataStorageAppointmentService"] }
 ];
 DashboardComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -7045,11 +7112,16 @@ DashboardComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         template: __webpack_require__(/*! raw-loader!./dashboard.component.html */ "./node_modules/raw-loader/index.js!./src/app/home/dashboard/dashboard.component.html"),
         styles: [__webpack_require__(/*! ./dashboard.component.css */ "./src/app/home/dashboard/dashboard.component.css")]
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
-        _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_3__["DataStorageService"],
-        src_app_auth_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"],
-        _calendar_calendar_list_calendar_service__WEBPACK_IMPORTED_MODULE_5__["CalendarService"],
-        _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatDialog"]])
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_shared_data_storage_service__WEBPACK_IMPORTED_MODULE_2__["DataStorageService"],
+        src_app_auth_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"],
+        _calendar_calendar_list_calendar_service__WEBPACK_IMPORTED_MODULE_4__["CalendarService"],
+        _angular_material__WEBPACK_IMPORTED_MODULE_6__["MatDialog"],
+        _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"],
+        _group_group_data_storage_service__WEBPACK_IMPORTED_MODULE_8__["GroupDataStorageService"],
+        src_app_auth_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"],
+        _angular_router__WEBPACK_IMPORTED_MODULE_7__["ActivatedRoute"],
+        _angular_material__WEBPACK_IMPORTED_MODULE_6__["MatSnackBar"],
+        _appointment_shared_appointment_data_storage_appointment_service__WEBPACK_IMPORTED_MODULE_9__["DataStorageAppointmentService"]])
 ], DashboardComponent);
 
 
@@ -7501,7 +7573,7 @@ let GroupDataStorageService = class GroupDataStorageService {
         this.http = http;
         this.authService = authService;
         this._snackbar = _snackbar;
-        this.baseUrlGroup = "http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/group/";
+        this.baseUrlGroup = "http://localhost:8181/api/group/";
         this.isLoadingSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](false);
         this.isLoading = this.isLoadingSubject.asObservable();
         this.groupSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]({});
@@ -7533,7 +7605,7 @@ let GroupDataStorageService = class GroupDataStorageService {
     }
     createGroupWithFile(formData) {
         return this.http
-            .post("http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/group/createFromFile", formData)
+            .post("http://localhost:8181/api/group/createFromFile", formData)
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(data => data), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["catchError"])(error => Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error))), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["finalize"])(() => this.isLoadingSubject.next(false)));
     }
     fetchGroup() {
@@ -7593,7 +7665,7 @@ let GroupDataStorageService = class GroupDataStorageService {
     postMajors() {
         this.isLoadingSubject.next(true);
         return this.http
-            .post("http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/admin/", null)
+            .post("http://localhost:8181/api/admin/", null)
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(data => data), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["catchError"])(error => Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error))), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["finalize"])(() => this.isLoadingSubject.next(false)))
             .subscribe(r => console.log(r));
     }
@@ -8649,9 +8721,9 @@ let DataStorageService = class DataStorageService {
         this.authService = authService;
         this.calService = calService;
         this._snackbar = _snackbar;
-        this.baseUrlEvent = "http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/event/";
-        this.baseUrlCalendar = "http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/calendar/";
-        this.baseUrlAdmin = "http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/admin/";
+        this.baseUrlEvent = "http://localhost:8181/api/event/";
+        this.baseUrlCalendar = "http://localhost:8181/api/calendar/";
+        this.baseUrlAdmin = "http://localhost:8181/api/admin/";
         this.isLoadingSubject = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"](false);
         this.isLoading = this.isLoadingSubject.asObservable();
         this.eventSubject = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"]({});
@@ -8720,7 +8792,7 @@ let DataStorageService = class DataStorageService {
     getEmails() {
         this.isLoadingSubject.next(true);
         this.http
-            .get("http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/admin/getAllUsers")
+            .get("http://localhost:8181/api/admin/getAllUsers")
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(data => data),
             Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(error => Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error)),
             Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(() => this.isLoadingSubject.next(false))))
@@ -8739,19 +8811,19 @@ let DataStorageService = class DataStorageService {
         var formdata = new FormData();
         formdata.append("email", email);
         return this.http
-            .post("http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/auth/forgot", formdata)
+            .post("http://localhost:8181/api/auth/forgot", formdata)
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(data => data), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(error => Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error))), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(() => this.isLoadingSubject.next(false)));
     }
     submitPassword(obj) {
         this.isLoadingSubject.next(true);
         return this.http
-            .post("http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/auth/processResetPassword", obj)
+            .post("http://localhost:8181/api/auth/processResetPassword", obj)
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(data => data), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(error => Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error))), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(() => this.isLoadingSubject.next(false)));
     }
     updatePassword(obj) {
         this.isLoadingSubject.next(true);
         return this.http
-            .put("http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/admin/changePassword", obj)
+            .put("http://localhost:8181/api/admin/changePassword", obj)
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(data => data), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(error => Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error))), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(() => this.isLoadingSubject.next(false)));
     }
     registerUsers(file, role) {
@@ -8761,7 +8833,7 @@ let DataStorageService = class DataStorageService {
         console.log(formdata);
         console.log("file upload!");
         return this.http
-            .post("http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/file/uploadUser/" + role, formdata)
+            .post("http://localhost:8181/api/file/uploadUser/" + role, formdata)
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(data => data), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(error => Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error))), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(() => this.isLoadingSubject.next(false)));
     }
     uploadImage(images) {
@@ -8797,7 +8869,7 @@ let DataStorageService = class DataStorageService {
         return this.http.get(this.baseUrlAdmin + "files/" + name);
     }
     getImages() {
-        return this.http.get('http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/auth/getImages');
+        return this.http.get('http://localhost:8181/api/auth/getImages');
     }
     addCourses(formData) {
         this.isLoadingSubject.next(true);
@@ -8808,7 +8880,7 @@ let DataStorageService = class DataStorageService {
     fetchUpcomingEvents() {
         this.isLoadingSubject.next(true);
         this.http
-            .get("http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/event/" + "upCommingEvents")
+            .get("http://localhost:8181/api/event/" + "upCommingEvents")
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(data => data),
             Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(error => Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error)),
             Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(() => this.isLoadingSubject.next(false))))
@@ -8825,7 +8897,7 @@ let DataStorageService = class DataStorageService {
     }
     getMajors() {
         this.isLoadingSubject.next(true);
-        this.http.get('http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/group/getAllMajors').pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(data => data), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(error => Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error))), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(() => this.isLoadingSubject.next(false))).subscribe(result => {
+        this.http.get('http://localhost:8181/api/group/getAllMajors').pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(data => data), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(error => Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error))), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(() => this.isLoadingSubject.next(false))).subscribe(result => {
             this.majorSubject.next(result.result);
         });
     }
@@ -8884,7 +8956,7 @@ let DataStorageService = class DataStorageService {
     }
     uploadMajors(formdata) {
         return this.http
-            .post("http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/admin/uploadCourses", formdata)
+            .post("http://localhost:8181/api/admin/uploadCourses", formdata)
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(data => data), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(error => Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error))), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(() => this.isLoadingSubject.next(false)));
     }
     newCalendar(obj) {
@@ -8975,7 +9047,7 @@ let DataStorageService = class DataStorageService {
     emailSelectedMembers(obj) {
         this.isLoadingSubject.next(true);
         return this.http
-            .post("http://ec2-100-26-194-180.compute-1.amazonaws.com:8181/api/group/" + "sendEmailToFew", obj)
+            .post("http://localhost:8181/api/group/" + "sendEmailToFew", obj)
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(data => data), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(error => Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error))), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(() => this.isLoadingSubject.next(false)));
     }
 };
