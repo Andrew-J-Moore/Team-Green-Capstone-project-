@@ -1481,8 +1481,8 @@ var AuthService = /** @class */ (function () {
         this.tokenStorage = tokenStorage;
         this.router = router;
         this._snackbar = _snackbar;
-        this.loginUrl = 'http://localhost:8080/api/auth/signin';
-        this.signupUrl = 'http://localhost:8080/api/auth/signup';
+        this.loginUrl = 'http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/auth/signin';
+        this.signupUrl = 'http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/auth/signup';
         this.userRoleSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"]({});
         this.usernameSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"]({});
         this.nameSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"]({});
@@ -4983,7 +4983,7 @@ __webpack_require__.r(__webpack_exports__);
 var DataStorageAppointmentService = /** @class */ (function () {
     function DataStorageAppointmentService(http) {
         this.http = http;
-        this.baseUrlAppointment = "http://localhost:8080/api/appointment/";
+        this.baseUrlAppointment = "http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/appointment/";
         this.isLoadingSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](false);
         this.isLoading = this.isLoadingSubject.asObservable();
         this.appointmentSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]({});
@@ -8304,7 +8304,7 @@ var GroupDataStorageService = /** @class */ (function () {
         this.http = http;
         this.authService = authService;
         this._snackbar = _snackbar;
-        this.baseUrlGroup = "http://localhost:8080/api/group/";
+        this.baseUrlGroup = "http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/group/";
         this.isLoadingSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](false);
         this.isLoading = this.isLoadingSubject.asObservable();
         this.groupSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]({});
@@ -8346,7 +8346,7 @@ var GroupDataStorageService = /** @class */ (function () {
     GroupDataStorageService.prototype.createGroupWithFile = function (formData) {
         var _this = this;
         return this.http
-            .post("http://localhost:8080/api/group/createFromFile", formData)
+            .post("http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/group/createFromFile", formData)
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (data) { return data; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["catchError"])(function (error) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error); })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["finalize"])(function () { return _this.isLoadingSubject.next(false); }));
     };
     GroupDataStorageService.prototype.fetchGroup = function () {
@@ -8413,7 +8413,7 @@ var GroupDataStorageService = /** @class */ (function () {
         var _this = this;
         this.isLoadingSubject.next(true);
         return this.http
-            .post("http://localhost:8080/api/admin/", null)
+            .post("http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/admin/", null)
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (data) { return data; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["catchError"])(function (error) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error); })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["finalize"])(function () { return _this.isLoadingSubject.next(false); }))
             .subscribe(function (r) { return console.log(r); });
     };
@@ -9499,9 +9499,9 @@ var DataStorageService = /** @class */ (function () {
         this.authService = authService;
         this.calService = calService;
         this._snackbar = _snackbar;
-        this.baseUrlEvent = "http://localhost:8080/api/event/";
-        this.baseUrlCalendar = "http://localhost:8080/api/calendar/";
-        this.baseUrlAdmin = "http://localhost:8080/api/admin/";
+        this.baseUrlEvent = "http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/event/";
+        this.baseUrlCalendar = "http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/calendar/";
+        this.baseUrlAdmin = "http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/admin/";
         this.isLoadingSubject = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"](false);
         this.isLoading = this.isLoadingSubject.asObservable();
         this.eventSubject = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"]({});
@@ -9599,7 +9599,7 @@ var DataStorageService = /** @class */ (function () {
         var _this = this;
         this.isLoadingSubject.next(true);
         this.http
-            .get("http://localhost:8080/api/admin/getAllUsers")
+            .get("http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/admin/getAllUsers")
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }),
             Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error); }),
             Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(function () { return _this.isLoadingSubject.next(false); })))
@@ -9619,21 +9619,21 @@ var DataStorageService = /** @class */ (function () {
         var formdata = new FormData();
         formdata.append("email", email);
         return this.http
-            .post("http://localhost:8080/api/auth/forgot", formdata)
+            .post("http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/auth/forgot", formdata)
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error); })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(function () { return _this.isLoadingSubject.next(false); }));
     };
     DataStorageService.prototype.submitPassword = function (obj) {
         var _this = this;
         this.isLoadingSubject.next(true);
         return this.http
-            .post("http://localhost:8080/api/auth/processResetPassword", obj)
+            .post("http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/auth/processResetPassword", obj)
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error); })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(function () { return _this.isLoadingSubject.next(false); }));
     };
     DataStorageService.prototype.updatePassword = function (obj) {
         var _this = this;
         this.isLoadingSubject.next(true);
         return this.http
-            .put("http://localhost:8080/api/admin/changePassword", obj)
+            .put("http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/admin/changePassword", obj)
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error); })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(function () { return _this.isLoadingSubject.next(false); }));
     };
     DataStorageService.prototype.registerUsers = function (file, role) {
@@ -9644,7 +9644,7 @@ var DataStorageService = /** @class */ (function () {
         console.log(formdata);
         console.log("file upload!");
         return this.http
-            .post("http://localhost:8080/api/file/uploadUser/" + role, formdata)
+            .post("http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/file/uploadUser/" + role, formdata)
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error); })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(function () { return _this.isLoadingSubject.next(false); }));
     };
     DataStorageService.prototype.uploadImage = function (images) {
@@ -9693,7 +9693,7 @@ var DataStorageService = /** @class */ (function () {
         return this.http.get(this.baseUrlAdmin + "files/" + name);
     };
     DataStorageService.prototype.getImages = function () {
-        return this.http.get('http://localhost:8080/api/auth/getImages');
+        return this.http.get('http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/auth/getImages');
     };
     DataStorageService.prototype.addCourses = function (formData) {
         var _this = this;
@@ -9706,7 +9706,7 @@ var DataStorageService = /** @class */ (function () {
         var _this = this;
         this.isLoadingSubject.next(true);
         this.http
-            .get("http://localhost:8080/api/event/" + "upCommingEvents")
+            .get("http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/event/" + "upCommingEvents")
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }),
             Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error); }),
             Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(function () { return _this.isLoadingSubject.next(false); })))
@@ -9724,7 +9724,7 @@ var DataStorageService = /** @class */ (function () {
     DataStorageService.prototype.getMajors = function () {
         var _this = this;
         this.isLoadingSubject.next(true);
-        this.http.get('http://localhost:8080/api/group/getAllMajors').pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error); })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(function () { return _this.isLoadingSubject.next(false); })).subscribe(function (result) {
+        this.http.get('http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/group/getAllMajors').pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error); })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(function () { return _this.isLoadingSubject.next(false); })).subscribe(function (result) {
             _this.majorSubject.next(result.result);
         });
     };
@@ -9789,7 +9789,7 @@ var DataStorageService = /** @class */ (function () {
     DataStorageService.prototype.uploadMajors = function (formdata) {
         var _this = this;
         return this.http
-            .post("http://localhost:8080/api/admin/uploadCourses", formdata)
+            .post("http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/admin/uploadCourses", formdata)
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error); })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(function () { return _this.isLoadingSubject.next(false); }));
     };
     DataStorageService.prototype.newCalendar = function (obj) {
@@ -9891,7 +9891,7 @@ var DataStorageService = /** @class */ (function () {
         var _this = this;
         this.isLoadingSubject.next(true);
         return this.http
-            .post("http://localhost:8080/api/group/" + "sendEmailToFew", obj)
+            .post("http://ec2-3-93-23-176.compute-1.amazonaws.com:8080/api/group/" + "sendEmailToFew", obj)
             .pipe((Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(error); })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(function () { return _this.isLoadingSubject.next(false); }));
     };
     DataStorageService.ctorParameters = function () { return [
